@@ -1,0 +1,82 @@
+# -------------------------------------------------------------------------------------
+#
+#                         Makefile for the DoubleProbeAnalysis
+#                                        V 0.01
+#
+#                            (c) Brian Lynch February, 2015
+#
+# -------------------------------------------------------------------------------------
+# possible make options are:
+#      "make clean"            to clean up all .o and temp files
+#      "make mrclean"          to clean up all .o, temp files, and executables
+#      "make all"              to compile everything
+
+CC       := g++
+DEBUG    := -g
+CCFLAGS  := $(DEBUG) -Wall -std=c++0x
+
+DIR_BASE := $(CURDIR)
+DIR_DP   := $(DIR_BASE)/doubleprobe
+DIR_GNU  := $(DIR_BASE)/gnuplot_utils
+DIR_MAU  := $(DIR_BASE)/matrix_utils
+
+.PHONY: clean_dp dir_dp
+.PHONY: clean_sub dir_sub
+
+all: dir_dp dir_sub
+	@mkdir -p $(DIR_BASE)/bin
+	@cp   $(DIR_BASE)/doubleprobe/DoubleProbeAnalysis $(DIR_BASE)/bin/
+	@echo "   "
+	@echo "SUCCESSFULlY COMPILED!"
+	@echo "Copied executables into /bin"
+	@echo "View the README for more information"
+	@echo "   "
+
+clean: clean_dp clean_sub
+	@echo "   "
+	@echo "Deleted *.o and *~ files"
+	@echo "   "
+
+mrclean: clean
+	rm -f $(DIR_DP)/DoubleProbeAnalysis
+	rm -f $(DIR_BASE)/bin/DoubleProbeAnalysis
+	@echo "   "
+	@echo "Deleted executable files"
+	@echo "   "
+
+# --------------------------------------------------------------------------------------
+# Directory matrix_utils
+# --------------------------------------------------------------------------------------
+
+clean_sub:
+	@rm -f $(DIR_MAU)/*.o
+	@rm -f $(DIR_MAU)/*~
+
+dir_sub: $(DIR_MAU)/matrix_ops.o 
+
+$(DIR_MAU)/matrix_ops.o: $($@:.o=.cpp) $($@:.o=.h)
+	$(CC) -o $@ -c $(DIR_MAU)/matrix_ops.cpp $(CCFLAGS)
+
+# --------------------------------------------------------------------------------------
+# Directory doubleprobe
+# --------------------------------------------------------------------------------------
+clean_dp:
+	@rm -f $(DIR_DP)/*.o
+	@rm -f $(DIR_DP)/*~
+
+dir_dp: $(DIR_DP)/DoubleProbeAnalysis
+
+$(DIR_DP)/IVFit2NLLS.o: $($@:.o=.cpp) $($@:.o=.h) \
+                        $(DIR_MAU)/matrix_ops.h   \
+                        $(DIR_DP)/DoubleProbeAnalysis.h
+	$(CC) -o -c $@ $< $(CCFLAGS) -I$(DIR_MAU)
+
+$(DIR_DP)/DoubleProbeAnalysis.o: $($@:.o=.cpp) $($@:.o=.h) \
+                                 $(DIR_DP)/IVFit2NLLS.o     \
+                                 $(DIR_MAU)/matrix_ops.o  
+	$(CC) -c -o $@ $< $(CCFLAGS) -I$(DIR_BASE) -I$(DIR_MAU)
+
+$(DIR_DP)/DoubleProbeAnalysis: $(DIR_DP)/DoubleProbeAnalysis.cpp \
+                               $(DIR_DP)/IVFit2NLLS.cpp           \
+                               $(DIR_MAU)/matrix_ops.cpp           
+	$(CC) -o $@ $^ $(CCFLAGS) -I$(DIR_BASE) -I$(DIR_MAU) -llapack
