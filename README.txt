@@ -1,22 +1,24 @@
-# -------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 #
 #                            README for DoubleProbeAnalysis
 #                                        V 0.01
 #
 #                            (c) Brian Lynch February, 2015
 #
-# -------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 
-This software was written for educational purposes. It is intended to be a walkthrough
-of performing a simple nonlinear least squares curve fit on double Langmuir probe data
-taken from a plasma physics experiment. For more information about nonlinear least
-squares and the Langmuir probe diagnostic, see the following links:
+This software was written for educational purposes. It is intended to be a
+walkthrough of performing a simple nonlinear least squares curve fit on
+double Langmuir probe data taken from a plasma physics experiment. For
+more information about nonlinear least squares and the Langmuir probe
+diagnostic, see the following links:
 
 http://mathworld.wolfram.com/NonlinearLeastSquaresFitting.html
 http://en.wikipedia.org/wiki/Langmuir_probe
 
-In this code, LAPACK libraries are used with the -llapack link in the Makefile.
-For more information about the LAPACK linear algebra library, see the following link:
+In this code, LAPACK libraries are used with the -llapack link in the
+Makefile. For more information about the LAPACK linear algebra library, see
+the following link:
 
    http://www.netlib.org/lapack/
    
@@ -31,7 +33,7 @@ operating systems.
       "make mrclean"          to clean up all .o, temp files, and executables
       "make all"              to compile everything
       
-Example calling commands (using example data provided in the ExampleData folder):
+Example calling commands (using example data in the ExampleData folder):
    bin/DoubleProbeAnalysis -f <inputfilename>
    bin/DoubleProbeAnalysis -f ExampleData/ExampleData.dat
    
@@ -54,9 +56,11 @@ When using the example data, you should get the following terminal output:
    > Writing fit data to file: ExampleData/ExampleData_fit.dat
    > -- END DoubleProbeAnalysis --
 
-Inside the folder ExampleData, I included a png file titled "ExampleDataPlot.png"
-as an example of the output produced by the code. It should be noted that the fit
-is not perfect. In particular, the electron temperature is a bit high (in reality
-it is more like 4eV). The descrepancy between the data and curve fit is due to the
-idealization made when deriving the I(V) fit. Better, slightly more complicated,
-models include effects geometric and plasma sheath effects.
+Inside the folder ExampleData, you will find a .png file titled
+"ExampleDataPlot.png". It is an example of the output produced by the
+code. Note that the fit is not perfect. In particular, the electron
+temperature is a bit high (in reality it is more like 4eV).
+The descrepancy between the data and curve fit is due to the idealizations
+made when deriving the simple 2 parameter I(V) fit. There exists other,
+slightly more complicated, models which include geometric and plasma
+sheath effects.
