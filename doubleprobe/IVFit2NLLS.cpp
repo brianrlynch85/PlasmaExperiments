@@ -103,7 +103,7 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
 
       }
       
-      //Now find the transposed Jacobian
+      //Now find the transpose of A
       if(!TransposeMatrix(A, Npoi, Npar, &AT)){
        
          std::cerr << "ERROR: transposing matrix failed: A" << std::endl;
