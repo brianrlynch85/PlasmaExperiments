@@ -36,12 +36,12 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
           *dIi    = NULL, //Difference between fit and data
           *R2     = NULL, //Sum of squared residuals
           *dparam = NULL, //Difference between new and old parameters
-          *J      = NULL, //Jacobian matrix
-          *JT     = NULL, //Tranposed Jacobian matrix
-          *a      = NULL, //Product of JT * J
-          *ainv   = NULL, //Inverse of JT * J
+          *A      = NULL, //A matrix
+          *AT     = NULL, //Tranposed A matrix
+          *a      = NULL, //Product of AT * A
+          *ainv   = NULL, //Inverse of AT * A
           *I      = NULL, //Identity matrix can be used for diagnostics
-          *b      = NULL, //Product of JT * dIi
+          *b      = NULL, //Product of AT * dIi
           *param  = NULL; //Parameter array storing struc IVFIT2Params info
       
    //Function pointer to help setup the Jacobian
@@ -64,8 +64,8 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
       dIi    = new double[Npoi],
       R2     = new double[Ntries],
       dparam = new double[Npar],
-      J      = new double[Npoi * Npar],
-      JT     = new double[Npar * Npoi],
+      A      = new double[Npoi * Npar],
+      AT     = new double[Npar * Npoi],
       a      = new double[Npar * Npar],
       ainv   = new double[Npar * Npar],
       I      = new double[Npar * Npar],
@@ -87,7 +87,8 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
    R2[0] = 1.0;
     
    while((it < Ntries) && (R2[it] > TOLERANCE)){
-   
+      
+      //Calculate the A Matrix
       for(unsigned int row = 0; row < Npoi; row++){
          
          Vt = V.at(row);
@@ -96,51 +97,35 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
          
          for(unsigned int col = 0; col < Npar; col++){
             
-            //Calculate the Jacobian Matrix
-            J[row * Npar + col] = IVds[col](Vt,param[0],param[1]);
+            A[row * Npar + col] = IVds[col](Vt,param[0],param[1]);
             
          }
 
       }
       
-      for(unsigned int row = 0; row < Npar; row++){
-         
-         for(unsigned int col = 0; col < Npoi; col++){
-            
-            Vt = V.at(col);
-            
-            //Calculate the transpose Jacobian Matrix
-            JT[row * Npoi + col] = IVds[row](Vt,param[0],param[1]);
-            
-         }
-
-      }
-      
-      /* 
-       * Product of transposed Jacobian with Jacobian. This
-       * is the matrix we need to invert.
-       */
-      if(!MultiplyMatrix(JT, Npar, Npoi, J, Npoi, Npar, &ainv)){
+      //Now find the transposed Jacobian
+      if(!TransposeMatrix(A, Npoi, Npar, &AT)){
        
-         std::cout << "ERROR: matrix multiplication failed" << std::endl;
+         std::cerr << "ERROR: transposing matrix failed: A" << std::endl;
          res = 0;
          goto cleanup;
          
       }
-      
-      //Just have have a copy of the uninverted matrix
-      if(!MultiplyMatrix(JT, Npar, Npoi, J, Npoi, Npar, &a)){
        
-         std::cout << "ERROR: matrix multiplication failed" << std::endl;
+      //Product of a = AT * A. a is the matrix we need to invert
+      if(!MultiplyMatrix(AT, Npar, Npoi, A, Npoi, Npar, &a)){
+       
+         std::cerr << "ERROR: matrix multiplication failed: AT * A";
+         std::cerr << std::endl;
          res = 0;
          goto cleanup;
          
       }
       
       //Calculate the inverse matrix ainv
-      if(!InvertMatrix(&ainv, Npar)){
+      if(!InvertMatrix(a, Npar, &ainv)){
        
-         std::cout << "ERROR: matrix inversion failed" << std::endl;
+         std::cerr << "ERROR: matrix inversion failed: ainv" << std::endl;
          res = 0;
          goto cleanup;
          
@@ -152,19 +137,21 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
        */
       if(!MultiplyMatrix(ainv, Npar, Npar, a, Npar, Npar, &I)){
        
-         std::cout << "ERROR: matrix multiplication failed" << std::endl;
+         std::cerr << "ERROR: matrix multiplication failed: ainv * a";
+         std::cerr << std::endl;
+         PrintMatrix(I, Npar, Npar);
          res = 0;
          goto cleanup;
          
       }
       
       /*
-       * Product of tranposed Jacobian and the difference between
-       * data and model.
+       * Product of AT and the difference between data and model.
        */
-      if(!MultiplyMatrix(JT, Npar, Npoi, dIi, Npoi, 1, &b)){
+      if(!MultiplyMatrix(AT, Npar, Npoi, dIi, Npoi, 1, &b)){
        
-         std::cout << "ERROR: matrix multiplication failed" << std::endl;
+         std::cerr << "ERROR: matrix multiplication failed: AT * dIi";
+         std::cerr << std::endl;
          res = 0;
          goto cleanup;
          
@@ -173,7 +160,8 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
       //Calculate the small increment toward convergence
       if(!MultiplyMatrix(ainv, Npar, Npar, b, Npar, 1, &dparam)){
        
-         std::cout << "ERROR: matrix multiplication failed" << std::endl;
+         std::cerr << "ERROR: matrix multiplication failed:  ainv * b";
+         std::cerr << std::endl;
          res = 0;
          goto cleanup;
          
@@ -210,8 +198,8 @@ cleanup:
    delete[] dIi;
    delete[] R2;
    delete[] dparam;
-   delete[] J;
-   delete[] JT;
+   delete[] A;
+   delete[] AT;
    delete[] a;
    delete[] ainv;
    delete[] I;
