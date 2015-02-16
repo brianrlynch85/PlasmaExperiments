@@ -40,12 +40,13 @@ extern "C"{
  * InvertMatrix(...) calculates the inverse of A. A is a N x N matrix
  * stored as a linear data structure. 
  *              
- *      @param[in/out] double **A: matrix A
- *      @param[in] int N: # rows and cols in A
+ *      @param[in] double *A: matrix A
+ *      @param[in] int ANRC: # rows and cols in A
+ *      @param[out] doule **AINV: inverse of matrix A
  *      @return int: success/failure
  * 
  */
-int InvertMatrix(double **A, int N);
+int InvertMatrix(const double *A, int ANRC, double **AINV);
 
 /************************************************************************/
 /*
@@ -57,12 +58,38 @@ int InvertMatrix(double **A, int N);
  *      @param[in] double *B: matrix B
  *      @param[in] int BNROW: # rows in B
  *      @param[in] int BNCOL: # cols in B
- *      @param[in] double **C: matrix C
+ *      @param[out] double **C: matrix C
  *      @return int: success/failure
  * 
  */
 int MultiplyMatrix(const double *A, const int &ANROW, const int &ANCOL,
                    const double *B, const int &BNROW, const int &BNCOL,
                                                            double **C);
+
+/************************************************************************/
+/*
+ * TransposeMatrix(...) calculates the transpose of matrix A
+ *              
+ *      @param[in] double *A: matrix A
+ *      @param[in] int ANROW: # rows in A
+ *      @param[in] int ANCOL: # cols in A
+ *      @param[output] double *AT: transpose of A
+ *      @return int: success/failure
+ * 
+ */
+int TransposeMatrix(const double *A, const int &ANROW, const int &ANCOL,
+                                                           double **AT);
+
+/************************************************************************/
+/*
+ * PrintMatrix(...) print matrix A
+ *              
+ *      @param[in] double *A: matrix A
+ *      @param[in] int ANROW: # rows in A
+ *      @param[in] int ANCOL: # cols in A
+ *      @return int: success/failure
+ * 
+ */
+int PrintMatrix(const double *A, const int &ANROW, const int &ANCOL);
 
 #endif

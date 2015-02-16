@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "matrix_ops.h"
 
@@ -18,17 +19,21 @@
  * as well as the license file llapack_license contained in the
  * matrix_utils folder.
  * 
- * A is a N x N matrix stored as a linear data structure
+ * A is a ANRC x ANRC matrix stored as a linear data structure
+ * It is the users responsibility to make sure AINV is properly allocated.
  * 
 */
-int InvertMatrix(double **A, int N){
+int InvertMatrix(const double *A, int ANRC, double **AINV){
+   
+   //Copy the input matrix A into the output matrix AINV
+   memcpy(*AINV, A, ANRC * ANRC * sizeof(double));
    
    int res = 0,
-       INFO   = -1,        //Status helper from lapack functions
-       LWORK = N * N * N;  //How big we need the work space to be
+       INFO   = -1,                 //Status helper from lapack functions
+       LWORK = ANRC * ANRC * ANRC;  //How big we need the work space to be
        
    //Pivot indices of the matrix for row swaps used in inversion
-   int *IPIV = (int *)malloc((N+1) * sizeof(int));
+   int *IPIV = (int *)malloc((ANRC+1) * sizeof(int));
     
    //Workspace declaration from Lwork
    double *WORK = (double *)malloc(LWORK * sizeof(double));
@@ -51,7 +56,7 @@ int InvertMatrix(double **A, int N){
 
    // LU decomoposition of a general matrix
    //http://www.netlib.no/netlib/lapack/double/dgetrf.f
-   dgetrf_(&N,&N,*A,&N,IPIV,&INFO);
+   dgetrf_(&ANRC,&ANRC,*AINV,&ANRC,IPIV,&INFO);
    
    if(INFO != 0){
        
@@ -68,7 +73,7 @@ int InvertMatrix(double **A, int N){
    
    //Find the inverse of a matrix A given its LU decomposition
    //http://www.netlib.no/netlib/lapack/double/dgetri.f
-   dgetri_(&N,*A,&N,IPIV,WORK,&LWORK,&INFO);
+   dgetri_(&ANRC,*AINV,&ANRC,IPIV,WORK,&LWORK,&INFO);
    
    if(INFO != 0){
        
@@ -137,3 +142,54 @@ int MultiplyMatrix(const double *A, const int &ANROW, const int &ANCOL,
    
 return(res);
 } //End function MultiplyMatrix
+
+/************************************************************************/
+/* 
+ * Function transposes matrix A
+ * It is the users responsibility to make sure AT is properly allocated.
+ */
+int TransposeMatrix(const double *A, const int &ANROW, const int &ANCOL,
+                                                           double **AT){
+   
+   int res = 0;
+   
+   for(int row = 0; row < ANROW; row++){
+         
+      for(int col = 0; col < ANCOL; col++){
+              
+         (*AT)[col * ANROW + row] = A[row * ANCOL + col];
+
+      }
+         
+   }
+   
+   res = 1;
+   
+return(res);
+} //End function TransposeMatrix
+
+/************************************************************************/
+/* 
+ * Function printf matrix A
+ * It is the users responsibility to make sure A is properly allocated.
+ */
+int PrintMatrix(const double *A, const int &ANROW, const int &ANCOL){
+   
+   int res = 0;
+   
+   for(int row = 0; row < ANROW; row++){
+         
+      for(int col = 0; col < ANCOL; col++){
+         
+         printf("%3.2e ", A[row * ANCOL + col]);
+
+      }
+      
+      printf("\n");
+         
+   }
+   
+   res = 1;
+   
+return(res);
+} //End function PrintMatrix
