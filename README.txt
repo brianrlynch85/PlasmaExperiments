@@ -59,7 +59,7 @@ When using the example data, you should get the following terminal output:
 Inside the folder ExampleData, you will find a .png file titled
 "ExampleDataPlot.png". It is an example of the output produced by the
 code. Note that the fit is not perfect. In particular, the electron
-temperature is a bit high (in reality it is more like 4eV).
+temperature is a bit high (in reality it is more like 8eV).
 The descrepancy between the data and curve fit is due to the idealizations
 made when deriving the simple 2 parameter I(V) fit. There exists other,
 slightly more complicated, models which include geometric and plasma
