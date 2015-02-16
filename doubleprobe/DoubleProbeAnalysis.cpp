@@ -1,10 +1,10 @@
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 //
 //                                 DoubleProbeAnalysis.cpp V 0.01
 //
 //                                 (c) Brian Lynch February, 2015
 //
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
 #include <iostream>
 #include <fstream>
@@ -132,8 +132,10 @@ std::cout << "-- BEGIN DoubleProbeAnalysis --" << std::endl;
    //Print the fitted parameters
    std::cout.precision(3);
    std::cout << "Final fit parameters: " << std::endl;
-   std::cout << " Ion saturation current [A]  : " << FitParams.Isat << std::endl;
-   std::cout << " Electron temperature   [eV] : " << FitParams.Te << std::endl;
+   std::cout << " Ion saturation current [A]  : " << FitParams.Isat;
+   std::cout << std::endl;
+   std::cout << " Electron temperature   [eV] : " << FitParams.Te;
+   std::cout << std::endl;
    
    //Declare and write the output file
    std::string output_filename_s(input_filename);

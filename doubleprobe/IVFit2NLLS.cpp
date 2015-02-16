@@ -1,10 +1,10 @@
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 //
 //                                     IVFit2NLLS.cpp V 0.01
 //
 //                                 (c) Brian Lynch February, 2015
 //
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
 #include <math.h>
 #include <vector>
@@ -45,18 +45,20 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
           *param  = NULL; //Parameter array storing struc IVFIT2Params info
       
    //Function pointer to help setup the Jacobian
-   double (*IVds[])(const double &,const double &, const double &) = {dIvdIsat, dIvdTe};
+   double (*IVds[])(const double &,const double &, const double &) =
+                                                 {dIvdIsat, dIvdTe};
    
-   //Make sure number of read points for Ii and V are the same before proceeding
+   //Make sure number of read points for Ii and V are the same
    if(Ii.size() != V.size()){
       
-      std::cout << "Passed incompatible arrays for I and V input data" << std::endl;
+      std::cout << "Passed incompatible arrays for I and V input data";
+      std::cout << std::endl;
       res = 0;
       return(res);
      
    }
    
-   //Since there could be ALOT of data points, make sure new[] is successful
+   //Since there may be ALOT of data points, make sure new[] is successful
    try{
       
       dIi    = new double[Npoi],
@@ -72,7 +74,8 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
       
    }catch(std::bad_alloc& ba){
       
-      std::cerr << "ERROR: in IVFIT2NLLS initialization: " << ba.what() << std::endl;
+      std::cerr << "ERROR: IVFIT2NLLS initialization: " << ba.what();
+      std::cerr << std::endl;
       res = 0;
       goto cleanup;
       
@@ -144,7 +147,7 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
       }
       
       /*
-       * Calculate the product of ainv * a [result should be identity matrix].
+       * Calculate the product of ainv * a [should be the identity matrix].
        * If trouble with routine, could be used as diagnostic.
        */
       if(!MultiplyMatrix(ainv, Npar, Npar, a, Npar, Npar, &I)){

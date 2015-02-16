@@ -1,10 +1,10 @@
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 //
 //                                     IVFit2NLLS.h V 0.01
 //
 //                                (c) Brian Lynch February, 2015
 //
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
 #ifndef IVFit2NLLS_h
 #define IVFit2NLLS_h
@@ -13,13 +13,15 @@
 
 /************************************************************************/
 /*
- * IVFIT2NLLS(...) performs a 2 parameter non-linear least squares curve fit:
+ * IVFIT2NLLS(...) performs a 2 parameter nonlinear least squares curve
+ * fit:
  *       
  *      @param[in] std::vector Ii: an input vector of current measurements
  *      @param[in] std::vector V: an input vector of voltage measurements
  *      @param[in] int Ntries: maximum # attempts to curve fit 
  *      @param[in] double TOLERANCE: convergence tolerance
- *      @param[in/out] struct IVFit2Params Fitparams: input guess / output final fit paramters
+ *      @param[in/out] struct IVFit2Params Fitparams: input guess / output
+ *                                                    final fit paramters
  *      @return int success/failure
  * 
  */
@@ -61,7 +63,8 @@ inline double Iv(const double &V, const double &Isat, const double &Te){
  *      @return double: the collected current
  * 
  */
-inline double dIvdIsat(const double &V, const double &Isat, const double &Te){
+inline double dIvdIsat(const double &V, const double &Isat,
+                                         const double &Te){
   
    double result = 0.0;
    
@@ -75,7 +78,8 @@ inline double dIvdIsat(const double &V, const double &Isat, const double &Te){
 /*
  * The partial derivative of I(V) w.r.t Te:
  * 
- *      d(I(V))/d(Te) = - Isat * 0.5 * V * (1.0 - pow(tanh(0.5 * V / Te),2.0)) / pow(Te,2.0)
+ *      d(I(V))/d(Te) = - Isat * 0.5 * V * (1.0 - pow(tanh(0.5 * V / Te),2.0))
+ *                      / pow(Te,2.0)
  *              
  *      @param[in]  V: the voltage difference between the probe tips
  *      @param[in]  e: the electron charge
@@ -83,7 +87,8 @@ inline double dIvdIsat(const double &V, const double &Isat, const double &Te){
  *      @return double: the collected current
  * 
  */
-inline double dIvdTe(const double &V, const double &Isat, const double &Te){
+inline double dIvdTe(const double &V, const double &Isat,
+                                       const double &Te){
   
    double result = 0.0;
    

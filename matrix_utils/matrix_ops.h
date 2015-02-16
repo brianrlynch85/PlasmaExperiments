@@ -1,10 +1,10 @@
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 //
 //                                     matrix_ops.h V 0.01
 //
 //                                (c) Brian Lynch February, 2015
 //
-// -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
 #ifndef matrix_ops_h
 #define matrix_ops_h
@@ -16,19 +16,22 @@
  * as well as the license file llapack_license contained in the
  * matrix_utils folder.
  * 
- * Wrap the fortran functions in extern so a C++ compiler does not load argument
- * information ("name mangling") when calling fortran functions dgetrf and dgetri.
+ * Wrap the fortran functions in extern so a C++ compiler does not load
+ * argument information ("name mangling") when calling fortran functions
+ * dgetrf and dgetri.
  * 
 */
 extern "C"{
    
     //Find the LU decomoposition of matrix A with dimension M x N
    //http://www.netlib.no/netlib/lapack/double/dgetrf.f
-    void dgetrf_(int *M, int *N, double *A, int *lda, int *IPIV, int *INFO);
+    void dgetrf_(int *M, int *N, double *A, int *lda, int *IPIV,
+                                                     int *INFO);
 
     //Find the inverse of a matrix A given its LU decomposition
     //http://www.netlib.no/netlib/lapack/double/dgetri.f
-    void dgetri_(int *N, double *A, int *lda, int *IPIV, double *WORK, int *lwork, int *INFO);
+    void dgetri_(int *N, double *A, int *lda, int *IPIV, double *WORK,
+                                               int *lwork, int *INFO);
     
 }
 
