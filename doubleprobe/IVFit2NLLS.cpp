@@ -44,7 +44,7 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
           *b      = NULL, //Product of AT * dIi
           *param  = NULL; //Parameter array storing struc IVFIT2Params info
       
-   //Function pointer to help setup the Jacobian
+   //Function pointer to help setup the A and AT matrices
    double (*IVds[])(const double &,const double &, const double &) =
                                                  {dIvdIsat, dIvdTe};
    
