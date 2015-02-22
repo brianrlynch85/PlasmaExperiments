@@ -26,16 +26,35 @@ A copy of the LAPACK modified BSD license is contained in the subfolder
 titled 'matrix_utils'. You will likely need to execute the command
 "sudo apt-get install liblapack-dev" to install the liblapack libraries.
 
+You may also need to install cmake depending whether or not you choose
+to use the older file Makefile.Old. To install cmake, execute the command
+"sudo apt-get install cmake".
+
 This software works on Ubuntu 12.04 & 14.04 and has not been verified on other
 operating systems.
-   possible make options are:
-      "make clean"            to clean up all .o and temp files
-      "make mrclean"          to clean up all .o, temp files, and executables
-      "make all"              to compile everything
+
+   possible cmake options are (will put the executables in build/bin):
+      "mkdir build"
+      "cd build"
+      "cmake ../"
+      "make"
+      "cd ../"
+      Now you have done and out of source build, which leaves the original
+      source directories clean.
       
-Example calling commands (using example data in the ExampleData folder):
-   bin/DoubleProbeAnalysis -f <inputfilename>
-   bin/DoubleProbeAnalysis -f ExampleData/ExampleData.dat
+      Example calling commands (using example data in the ExampleData folder):
+         build/bin/DoubleProbeAnalysis -f <inputfilename>
+         build/bin/DoubleProbeAnalysis -f ExampleData/ExampleData.dat
+   
+
+   possible make options are (will put the executables in bin):
+      "make -f Makefile.Old clean"            to clean up all .o and temp files
+      "make -f Makefile.Old mrclean"          to clean up all .o, temp files, and executables
+      "make -f Makefile.Old all"              to compile everything
+      
+      Example calling commands (using example data in the ExampleData folder):
+         bin/DoubleProbeAnalysis -f <inputfilename>
+         bin/DoubleProbeAnalysis -f ExampleData/ExampleData.dat
    
 When using the example data, you should get the following terminal output:
 
