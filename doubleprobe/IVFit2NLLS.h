@@ -34,11 +34,11 @@ int IVFit2NLLS(const std::vector<double> &Ii, const std::vector<double> &V,
  * The typical double probe characteristic trace is given by:
  * 
  *      I(V) = Isat * tanh(0.5 * e * V / Te)
- *              
- *      @param[in] double V: the voltage difference between the probe tips
- *      @param[in] double e: the electron charge
- *      @param[in] double Te: the electron temperature
- *      @return double: the collected current
+ *     
+ *      @param[in] double Isat: the ion saturation current in Amps 
+ *      @param[in] double V: the voltage difference between the probe tips in Volts
+ *      @param[in] double Te: the electron temperature in eV
+ *      @return double: I(V)
  * 
  */
 inline double Iv(const double &V, const double &Isat, const double &Te){
@@ -56,11 +56,11 @@ inline double Iv(const double &V, const double &Isat, const double &Te){
  * The partial derivative of I(V) w.r.t Isat:
  * 
  *      d(I(V))/d(Isat) = tanh(0.5 * e * V / Te)
- *              
- *      @param[in]  V: the voltage difference between the probe tips
- *      @param[in]  e: the electron charge
- *      @param[in] Te: the electron temperature
- *      @return double: the collected current
+ *         
+ *      @param[in] Isat: the ion saturation current in Amps   
+ *      @param[in]    V: the voltage difference between the probe tips in Volts
+ *      @param[in]   Te: the electron temperature in eV
+ *      @return  double: The partial derivative of I(V) w.r.t Isa
  * 
  */
 inline double dIvdIsat(const double &V, const double &Isat,
@@ -81,10 +81,10 @@ inline double dIvdIsat(const double &V, const double &Isat,
  *      d(I(V))/d(Te) = - Isat * 0.5 * V * (1.0 - pow(tanh(0.5 * V / Te),2.0))
  *                      / pow(Te,2.0)
  *              
- *      @param[in]  V: the voltage difference between the probe tips
- *      @param[in]  e: the electron charge
- *      @param[in] Te: the electron temperature
- *      @return double: the collected current
+ *      @param[in] Isat: the ion saturation current in Amps
+ *      @param[in]    V: the voltage difference between the probe tips in Volts
+ *      @param[in]   Te: the electron temperature in eV
+ *      @return  double: The partial derivative of I(V) w.r.t Te
  * 
  */
 inline double dIvdTe(const double &V, const double &Isat,
