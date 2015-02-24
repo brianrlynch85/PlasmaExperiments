@@ -15,7 +15,6 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 
 #Make sure lapack is installed
 find_package(LAPACK REQUIRED)
-include_directories(${CFITSIO_INC_PATH})
 
 #Incluce this directory
 include_directories(${CMAKE_SOURCE_DIR})
