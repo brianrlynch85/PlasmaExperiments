@@ -3,5 +3,5 @@
 *.png
 bin/*
 ExampleData/*
+build/*
 *.dat
-doubleprobe/DoubleProbeAnalysis

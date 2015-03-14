@@ -6,8 +6,8 @@
 //
 // -----------------------------------------------------------------------
 
-#ifndef matrix_ops_h
-#define matrix_ops_h
+#ifndef matrix_utils_matrix_ops_h
+#define matrix_utils_matrix_ops_h
 
 /************************************************************************/
 /*

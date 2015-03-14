@@ -36,11 +36,11 @@ int gauss_fit4_nlls(double **x, double **fx,
  * 
  *      = A * exp(-0.5 * (x - xo) * (x - xo) / sig2) + B
  *     
- *      @param[in] double x    : independent variable
- *      @param[in] double xo   : mean
- *      @param[in] double sig2 : standard deviation
- *      @param[in] double A    : amplitude
- *      @param[in] double B    : background noise offset
+ *      @param[in] x    : independent variable
+ *      @param[in] xo   : mean
+ *      @param[in] sig2 : standard deviation
+ *      @param[in] A    : amplitude
+ *      @param[in] B    : background noise offset
  *      @return Fxa
  * 
  */
@@ -53,15 +53,15 @@ inline double Fxa(const double &x, const double &xo, const double &sig2,
 
 /************************************************************************/
 /*
- * Partial derivative of fx w.r.t. Ao:
+ * Partial derivative of Fxa w.r.t. Ao:
  * 
  *      = exp(-0.5 * (x - x0) * (x - x0) / sig2)
  *     
- *      @param[in] double x    : independent variable
- *      @param[in] double xo   : mean
- *      @param[in] double sig2 : standard deviation
- *      @param[in] double A    : amplitude
- *      @param[in] double B    : background noise offset
+ *      @param[in] x    : independent variable
+ *      @param[in] xo   : mean
+ *      @param[in] sig2 : standard deviation
+ *      @param[in] A    : amplitude
+ *      @param[in] B    : background noise offset
  *      @return dFxdA 
  * 
  */
@@ -74,15 +74,15 @@ inline double dFxdA(const double &x, const double &xo, const double &sig2,
 
 /************************************************************************/
 /*
- * Partial derivative of fx w.r.t. xo:
+ * Partial derivative of Fxa w.r.t. xo:
  * 
  *      = A * (x - xo) * exp(-0.5 * (x - xo) * (x - xo) / sig2) / sig2
  *     
- *      @param[in] double x    : independent variable
- *      @param[in] double xo   : mean
- *      @param[in] double sig2 : standard deviation
- *      @param[in] double A    : amplitude
- *      @param[in] double B    : background noise offset
+ *      @param[in] x    : independent variable
+ *      @param[in] xo   : mean
+ *      @param[in] sig2 : standard deviation
+ *      @param[in] A    : amplitude
+ *      @param[in] B    : background noise offset
  *      @return dFxdxo 
  * 
  */
@@ -95,15 +95,15 @@ inline double dFxdxo(const double &x, const double &xo, const double &sig2,
 
 /************************************************************************/
 /*
- * Partial derivative of fx w.r.t. sig2:
+ * Partial derivative of Fxa w.r.t. sig2:
  * 
  *      = A * 0.5 * (x - xo) * (x - xo) * exp(-0.5 * (x - xo) * (x - xo) / sig2) / (sig2 * sig2)
  *     
- *      @param[in] double x    : independent variable
- *      @param[in] double xo   : mean
- *      @param[in] double sig2 : standard deviation
- *      @param[in] double A    : amplitude
- *      @param[in] double B    : background noise offset
+ *      @param[in] x    : independent variable
+ *      @param[in] xo   : mean
+ *      @param[in] sig2 : standard deviation
+ *      @param[in] A    : amplitude
+ *      @param[in] B    : background noise offset
  *      @return dFxdsig2
  * 
  */
@@ -116,15 +116,15 @@ inline double dFxdsig2(const double &x, const double &xo, const double &sig2,
 
 /************************************************************************/
 /*
- * Partial derivative of fx w.r.t. Bo:
+ * Partial derivative of Fxa w.r.t. Bo:
  * 
  *      = 1.0
  *     
- *      @param[in] double x    : independent variable
- *      @param[in] double xo   : mean
- *      @param[in] double sig2 : standard deviation
- *      @param[in] double A    : amplitude
- *      @param[in] double B    : background noise offset
+ *      @param[in] x    : independent variable
+ *      @param[in] xo   : mean
+ *      @param[in] sig2 : standard deviation
+ *      @param[in] A    : amplitude
+ *      @param[in] B    : background noise offset
  *      @return dFxdB
  * 
  */

@@ -41,7 +41,7 @@ int gauss_fit4_nlls(double **x, double **fx,
           *ainv   = NULL, // Inverse of AT * A
           *I      = NULL, // Identity matrix can be used for diagnostics
           *b      = NULL, // Product of AT * dFx
-          *param  = NULL; // Parameter array storing struc IVFIT2Params info
+          *param  = NULL; // Parameter array storing struc GaussFit4Params info
       
    // Function pointer to help setup the A and AT matrices
    double (*FXds[])(const double &, const double &, const double &,
@@ -71,7 +71,7 @@ int gauss_fit4_nlls(double **x, double **fx,
       
    }
    
-   //Set the initial fit parameters
+   // Set the initial fit parameters
    param[0] = FitParams.x0;
    param[1] = FitParams.sigma2;
    param[2] = FitParams.Ao;
@@ -80,7 +80,7 @@ int gauss_fit4_nlls(double **x, double **fx,
     
    while((it < Ntries) && (R2[it] > TOL)){
       
-      //Calculate the A Matrix
+      // Calculate the A Matrix
       for(unsigned int row = 0; row < Npoints; row++){
          
          xt       = (*x)[row];
@@ -94,9 +94,8 @@ int gauss_fit4_nlls(double **x, double **fx,
          }
 
       }
-      //getchar();
       
-      //Now find the transpose of A
+      // Now find the transpose of A
       if(!TransposeMatrix(A, Npoints, Npar, &AT)){
        
          std::cerr << "ERROR: transposing matrix failed: A" << std::endl;
@@ -105,7 +104,7 @@ int gauss_fit4_nlls(double **x, double **fx,
          
       }
        
-      //Product of a = AT * A. a is the matrix we need to invert
+      // Product of a = AT * A. a is the matrix we need to invert
       if(!MultiplyMatrix(AT, Npar, Npoints, A, Npoints, Npar, &a)){
        
          std::cerr << "ERROR: matrix multiplication failed: AT * A";
@@ -115,7 +114,7 @@ int gauss_fit4_nlls(double **x, double **fx,
          
       }
       
-      //Calculate the inverse matrix ainv
+      // Calculate the inverse matrix ainv
       if(!InvertMatrix(a, Npar, &ainv)){
        
          std::cerr << "ERROR: matrix inversion failed: ainv" << std::endl;
@@ -153,7 +152,7 @@ int gauss_fit4_nlls(double **x, double **fx,
          
       }
     
-      //Calculate the small increment toward convergence
+      // Calculate the small increment toward convergence
       if(!MultiplyMatrix(ainv, Npar, Npar, b, Npar, 1, &dparam)){
        
          std::cerr << "ERROR: matrix multiplication failed:  ainv * b";
@@ -178,12 +177,12 @@ int gauss_fit4_nlls(double **x, double **fx,
          
       }
   
-   }//End while loop checking convergence tolerance or max iterations
+   }// End while loop checking convergence tolerance or max iterations
    
    res = 1;
    
-   //Print Results
-   //Set the initial fit parameters
+   // Print Results
+   // Set the initial fit parameters
    FitParams.x0     = param[0];
    FitParams.sigma2 = param[1]; 
    FitParams.Ao     = param[2];
@@ -191,7 +190,7 @@ int gauss_fit4_nlls(double **x, double **fx,
    std::cout << " R^2         : " << R2[it] << std::endl;
    std::cout << " # iterations: " << it << std::endl;
    
-//Memory cleanup
+// Memory cleanup
 cleanup:
    
    delete[] dFx;
@@ -207,4 +206,4 @@ cleanup:
   
 //std::cout << "END gaussian_fit4_nlls" << std::endl;
 return (res);
-}//End function gaussian_fit4_nlls
+}// End function gaussian_fit4_nlls
