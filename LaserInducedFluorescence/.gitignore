@@ -1,7 +1,0 @@
-*.o
-*.out
-*.png
-bin/*
-ExampleData/*
-build/*
-*.dat

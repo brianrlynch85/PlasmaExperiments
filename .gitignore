@@ -4,4 +4,4 @@
 bin/*
 ExampleData/*
 *.dat
-doubleprobe/DoubleProbeAnalysis
+build/*
