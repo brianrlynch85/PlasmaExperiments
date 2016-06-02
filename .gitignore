@@ -5,3 +5,4 @@ bin/*
 ExampleData/*
 *.dat
 build/*
+build/

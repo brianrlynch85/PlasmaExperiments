@@ -1,11 +1,7 @@
-# ------------------------------------------------------------------------
-#
-#                         README for LaserInducedFluorescence
-#                                        V 0.01
-#
-#                            (c) Brian Lynch March, 2015
-#
-# ------------------------------------------------------------------------
+README for LaserInducedFluorescence
+===================================
+(c) Brian Lynch March, 2015
+---------------------------
 
 This software was written for educational purposes. It is intended to be a
 walkthrough of performing a simple nonlinear least squares curve fit on

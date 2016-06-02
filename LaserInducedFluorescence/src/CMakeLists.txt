@@ -7,8 +7,8 @@
 #
 # ------------------------------------------------------------------------
 cmake_minimum_required (VERSION 2.6)
-project(LIFAnalysis)
 
 #Tell cmake to look in the following subdirectories
 #for other files named CMakeLists.txt
-add_subdirectory (src)
+add_subdirectory (lif)
+add_subdirectory (matrix_utils)
