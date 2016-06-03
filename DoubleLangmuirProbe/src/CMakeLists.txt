@@ -1,10 +1,14 @@
 # ------------------------------------------------------------------------
 #
-#                         CMakeLists.txt for the matrix_utils
+#                         CMakeLists.txt for DoubleProbeAnalysis
 #                                        V 0.01
 #
 #                            (c) Brian Lynch February, 2015
 #
 # ------------------------------------------------------------------------
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/lib)
-add_library(matrix_utilslib matrix_ops.cpp)
+cmake_minimum_required (VERSION 2.6)
+
+#Tell cmake to look in the following subdirectories
+#for other files named CMakeLists.txt
+add_subdirectory (doubleprobe)
+add_subdirectory (matrix_utils)

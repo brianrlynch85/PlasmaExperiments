@@ -17,7 +17,7 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 find_package(LAPACK REQUIRED)
 
 #Incluce this directory
-include_directories(${CMAKE_SOURCE_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/src)
 
 #Print the included directories
 get_property(inc_dirs DIRECTORY PROPERTY INCLUDE_DIRECTORIES)

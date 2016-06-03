@@ -11,5 +11,4 @@ project(DoubleLangmuirProbe)
 
 #Tell cmake to look in the following subdirectories
 #for other files named CMakeLists.txt
-add_subdirectory (doubleprobe)
-add_subdirectory (matrix_utils)
+add_subdirectory (src)

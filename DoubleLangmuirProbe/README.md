@@ -1,11 +1,7 @@
-# ------------------------------------------------------------------------
-#
-#                            README for DoubleProbeAnalysis
-#                                        V 0.01
-#
-#                            (c) Brian Lynch February, 2015
-#
-# ------------------------------------------------------------------------
+README for DoubleProbeAnalysis
+==============================
+(c) Brian Lynch February, 2015
+------------------------------
 
 This software was written for educational purposes. It is intended to be a
 walkthrough of performing a simple nonlinear least squares curve fit on
